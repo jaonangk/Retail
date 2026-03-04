@@ -1,30 +1,72 @@
-# --- รวมไฟล์ที่ไม่ต้องการให้นำขึ้น GitHub ---
+# ==========================================
+# Retail Management System
+# Monorepo (Front-end + Back-end)
+# ==========================================
 
-# Dependencies (โฟลเดอร์ติดตั้งโปรแกรม)
+# ---------------------------
+# Dependencies (ทั้งสองฝั่ง)
+# ---------------------------
 node_modules/
 **/node_modules/
-.pnp
-.pnp.js
 
-# Testing (ไฟล์ทดสอบ)
-/coverage
+# ---------------------------
+# Environment Variables
+# ---------------------------
+.env
+.env.*
+!.env.example
+
+# ---------------------------
+# Build Output
+# ---------------------------
+build/
+dist/
+.next/
+out/
+
+# React specific
+front-end/build/
+front-end/dist/
+
+# Node backend build
+back-end/dist/
+
+# ---------------------------
+# Logs
+# ---------------------------
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Production / Build (ไฟล์ที่สร้างจากการสั่งรันงานจริง)
-/build
-dist/
-.next/
+# ---------------------------
+# Coverage
+# ---------------------------
+coverage/
+.nyc_output/
 
-# Environment Variables (ความปลอดภัย - สำคัญมาก!)
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# ---------------------------
+# Cache
+# ---------------------------
+.cache/
+.parcel-cache/
+.temp/
+.eslintcache
 
-# อื่นๆ
+# ---------------------------
+# OS / Editor
+# ---------------------------
 .DS_Store
 Thumbs.db
 .vscode/
+.vscode-test/
+
+# ---------------------------
+# Misc
+# ---------------------------
+*.pid
+*.seed
+*.pid.lock
+*.tgz
+.node_repl_history
