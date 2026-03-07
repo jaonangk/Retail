@@ -1,13 +1,11 @@
 import { useState } from "react";
-import { BrowserRouter, Routes, Route, useLocation, useMatch } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, useMatch, useNavigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 
-// หน้าที่ไม่มี Sidebar/Navbar
 import SignUp from './pages/SignUp';
 import SignIn from './pages/Signin';
 
-// หน้าที่มี Sidebar/Navbar
 import Dashboard from './pages/Dashboard';
 import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
@@ -20,6 +18,7 @@ import Inventory from './pages/inventory';
 function Layout({ cart, setCart }) {
   const location = useLocation();
   const matchProductDetail = useMatch('/products/:id');
+  const navigate = useNavigate(); // ✅ เพิ่ม
 
   const pageTitles = {
     '/dashboard': 'แดชบอร์ด',
@@ -48,6 +47,7 @@ function Layout({ cart, setCart }) {
           userName={user.name || 'Angkhanawan'}
           userRole={user.role || 'Admin'}
           cartQty={cartQty}
+          onCartClick={() => navigate('/pos')} // ✅ navigate พร้อมใช้แล้ว
         />
         <main className="flex-1 overflow-y-auto bg-gray-100 h-screen">
           <Routes>
@@ -56,10 +56,7 @@ function Layout({ cart, setCart }) {
             <Route path="/products/:id" element={<ProductDetail />} />
             <Route path="/product-detail" element={<ProductDetail />} />
             <Route path="/product-manage" element={<ManageProduct />} />
-            <Route
-              path="/pos"
-              element={<SalesPoint cart={cart} setCart={setCart} />}
-            />
+            <Route path="/pos" element={<SalesPoint cart={cart} setCart={setCart} />} />
             <Route
               path="/confirm-payment"
               element={
@@ -88,12 +85,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* ไม่มี Sidebar/Navbar */}
         <Route path="/" element={<SignUp />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
-
-        {/* มี Sidebar/Navbar */}
         <Route path="/*" element={<Layout cart={cart} setCart={setCart} />} />
       </Routes>
     </BrowserRouter>

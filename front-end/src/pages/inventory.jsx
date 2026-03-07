@@ -14,11 +14,6 @@ const adjustTypes = [
   '- ลดสต็อก (จ่ายสินค้าออก)',
 ];
 
-function getStatus(stock, reorder) {
-  if (stock === 0) return { label: 'หมด', color: 'bg-red-100 text-red-500' };
-  if (stock <= reorder) return { label: stock <= reorder * 0.5 ? 'วิกฤต' : 'ใกล้หมด', color: stock <= reorder * 0.5 ? 'bg-red-100 text-red-500' : 'bg-orange-100 text-orange-500' };
-  return { label: 'ปกติ', color: 'bg-green-100 text-green-600' };
-}
 
 export default function ProductManage() {
   const [products, setProducts] = useState(mockProducts);

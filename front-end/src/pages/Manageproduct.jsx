@@ -9,7 +9,6 @@ export default function ManageProduct() {
   const [barcode, setBarcode] = useState('');
   const [sellPrice, setSellPrice] = useState('');
   const [costPrice, setCostPrice] = useState('');
-  const [stock, setStock] = useState('');
   const [addQty, setAddQty] = useState('');
   const [weight, setWeight] = useState('');
   const [image, setImage] = useState(null);
@@ -30,7 +29,6 @@ export default function ManageProduct() {
     setBarcode('');
     setSellPrice('');
     setCostPrice('');
-    setStock('');
     setAddQty('');
     setWeight('');
     setImage(null);
@@ -38,7 +36,7 @@ export default function ManageProduct() {
 
   return (
     <div className="flex flex-col h-full bg-[#f4f4f4] p-8 overflow-y-auto">
-      <div className="max-w-2xl bg-white border-2 border-[#8B5A2B] rounded-[24px] p-8 shadow-sm">
+      <div className="max-w-2xl mx-auto bg-white border-2 border-[#8B5A2B] rounded-[24px] p-8 shadow-sm">
 
         {/* รูปภาพสินค้า */}
         <div className="mb-6">

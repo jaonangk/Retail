@@ -104,7 +104,7 @@ function Sidebar() {
 
     const handleLogout = () => {
         localStorage.removeItem("token");
-        navigate('/login');
+        navigate('/signin')
     };
 
     return (
