@@ -7,6 +7,7 @@ export default function Payment({ cart = [], setCart, onConfirm }) {
   const [method, setMethod] = useState('เงินสด');
   const [received, setReceived] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState(null); // ✅ เพิ่ม
 
   const addQty = (id) => setCart((prev) => prev.map((i) => i.id === id ? { ...i, qty: i.qty + 1 } : i));
   const removeQty = (id) => setCart((prev) => {
@@ -15,11 +16,13 @@ export default function Payment({ cart = [], setCart, onConfirm }) {
     if (item.qty === 1) return prev.filter((i) => i.id !== id);
     return prev.map((i) => i.id === id ? { ...i, qty: i.qty - 1 } : i);
   });
-  const deleteItem = (id) => setCart((prev) => prev.filter((i) => i.id !== id));
+  const deleteItem = (id) => {
+    setCart((prev) => prev.filter((i) => i.id !== id));
+    setDeleteTarget(null);
+  };
 
   const subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
-  const tax = 1.00;
-  const total = subtotal + tax;
+  const total = subtotal;
   const change = method === 'เงินสด' ? Math.max(0, Number(received) - total) : 0;
 
   const handleConfirmPayment = () => {
@@ -104,7 +107,8 @@ export default function Payment({ cart = [], setCart, onConfirm }) {
                   </div>
                   <div className="flex items-center gap-6">
                     <p className="font-bold text-black text-base w-24 text-right">{(item.price * item.qty).toFixed(2)} บาท</p>
-                    <button onClick={() => deleteItem(item.id)} className="text-[#E74C3C] hover:text-red-700 transition">
+                    {/* ✅ เปลี่ยนจาก deleteItem ตรงๆ มาเป็น setDeleteTarget */}
+                    <button onClick={() => setDeleteTarget(item)} className="text-[#E74C3C] hover:text-red-700 transition">
                       <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
                       </svg>
@@ -119,10 +123,6 @@ export default function Payment({ cart = [], setCart, onConfirm }) {
             <div className="flex justify-between font-bold text-black text-base">
               <span>รวม</span>
               <div className="w-32 flex justify-between"><span>{subtotal.toFixed(2)}</span><span>บาท</span></div>
-            </div>
-            <div className="flex justify-between font-bold text-black text-base">
-              <span>ภาษี</span>
-              <div className="w-32 flex justify-between"><span>{tax.toFixed(2)}</span><span>บาท</span></div>
             </div>
             <div className="flex justify-between font-bold text-black text-base pt-2 border-t border-gray-200">
               <span>รวมทั้งหมด</span>
@@ -145,6 +145,39 @@ export default function Payment({ cart = [], setCart, onConfirm }) {
         </button>
       </div>
 
+      {/* ── Modal ยืนยันลบสินค้า ── */}
+      {deleteTarget && (
+        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+          <div className="bg-white rounded-3xl shadow-2xl w-80 p-8 flex flex-col items-center text-center">
+            {/* ไอคอนตะกร้า */}
+            <div className="w-20 h-20 rounded-full bg-yellow-50 flex items-center justify-center mb-4">
+              <svg className="w-11 h-11 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            <p className="text-gray-700 text-base mb-1">
+              ต้องการลบ <span className="text-amber-500 font-bold">{deleteTarget.name}</span>
+            </p>
+            <p className="text-gray-700 text-base mb-6">ออกจากคลังสินค้าหรือไม่</p>
+            <div className="flex gap-3 w-full">
+              <button
+                onClick={() => deleteItem(deleteTarget.id)}
+                className="flex-1 py-2.5 bg-amber-400 hover:bg-amber-500 text-white font-bold rounded-xl transition"
+              >
+                ยืนยันการลบ
+              </button>
+              <button
+                onClick={() => setDeleteTarget(null)}
+                className="flex-1 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold rounded-xl transition"
+              >
+                ยกเลิก
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ── Modal เลือกช่องทางชำระเงิน ── */}
       {showModal && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
@@ -153,7 +186,6 @@ export default function Payment({ cart = [], setCart, onConfirm }) {
               className="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition">
               ✕
             </button>
-
             <div className="flex items-center gap-2 mb-5">
               <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <rect x="1" y="4" width="22" height="16" rx="2" />
@@ -161,12 +193,10 @@ export default function Payment({ cart = [], setCart, onConfirm }) {
               </svg>
               <h3 className="font-bold text-lg text-gray-900">ชำระเงิน</h3>
             </div>
-
             <div className="bg-amber-50 rounded-2xl py-5 text-center mb-6">
               <p className="text-sm text-gray-500 mb-1">ยอดที่ต้องชำระ</p>
               <p className="text-4xl font-bold text-amber-600">฿{total.toFixed(0)}</p>
             </div>
-
             <p className="text-sm font-bold text-gray-700 mb-3">เลือกวิธีชำระเงิน</p>
             <div className="grid grid-cols-2 gap-3 mb-5">
               {paymentMethods.map((m) => (
@@ -178,7 +208,6 @@ export default function Payment({ cart = [], setCart, onConfirm }) {
                 </button>
               ))}
             </div>
-
             {method === 'เงินสด' && (
               <div className="mb-4">
                 <label className="text-sm font-bold text-gray-700 mb-2 block">รับเงินมา (฿)</label>
@@ -196,7 +225,6 @@ export default function Payment({ cart = [], setCart, onConfirm }) {
                 </div>
               </div>
             )}
-
             <button
               onClick={handleConfirmPayment}
               disabled={method === 'เงินสด' && Number(received) < total}
