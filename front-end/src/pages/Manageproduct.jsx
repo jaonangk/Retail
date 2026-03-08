@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const categories = ['ทุกหมวดหมู่', 'เครื่องดื่ม', 'ขนมขบเคี้ยว', 'ของใช้ในบ้าน', 'อาหารสด'];
+const categories = ['ทุกหมวดหมู่', 'เครื่องดื่ม', 'ขนมกินเล่น', 'ของใช้', 'อาหารสด', 'ยาและเวชภัณฑ์'];
 const inputClass = 'w-full px-4 py-2.5 rounded-xl bg-[#D9D9D9] text-gray-700 text-sm outline-none focus:ring-2 focus:ring-amber-700 transition placeholder-gray-400 font-medium';
 
 export default function ManageProduct() {

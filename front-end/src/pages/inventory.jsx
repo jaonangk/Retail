@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 
 const mockProducts = [
   { id: 'P001', name: 'น้ำส้มคั้นสด 1L',     sku: 'DRK-001', category: 'เครื่องดื่ม', price: 90,  cost: 65,  stock: 3,  reorder: 10, emoji: '🥤', unit: 'ขวด' },
-  { id: 'P002', name: 'บะหมี่กึ่งสำเร็จรูป', sku: 'FD-042',  category: 'อาหาร',      price: 45,  cost: 28,  stock: 8,  reorder: 20, emoji: '🍜', unit: 'ซอง' },
+  { id: 'P002', name: 'บะหมี่กึ่งสำเร็จรูป', sku: 'FD-042',  category: 'ของกินเล่น',      price: 45,  cost: 28,  stock: 8,  reorder: 20, emoji: '🍜', unit: 'ซอง' },
   { id: 'P003', name: 'แชมพูซันซิลก์ 400ml',  sku: 'HCC-015', category: 'ของใช้',     price: 140, cost: 95,  stock: 2,  reorder: 15, emoji: '🧴', unit: 'ขวด' },
-  { id: 'P004', name: 'คุกกี้เนยอบกรอบ',      sku: 'SNK-088', category: 'ขนม',        price: 100, cost: 65,  stock: 52, reorder: 10, emoji: '🍪', unit: 'กล่อง' },
-  { id: 'P005', name: 'กระดาษทิชชู 12 ม้วน', sku: 'HME-033', category: 'ของในบ้าน', price: 170, cost: 120, stock: 4,  reorder: 12, emoji: '🧻', unit: 'แพ็ก' },
+  { id: 'P004', name: 'คุกกี้เนยอบกรอบ',      sku: 'SNK-088', category: 'อาหารสด',        price: 100, cost: 65,  stock: 52, reorder: 10, emoji: '🍪', unit: 'กล่อง' },
+  { id: 'P005', name: 'กระดาษทิชชู 12 ม้วน', sku: 'HME-033', category: 'ยาและเวชภัณฑ์', price: 170, cost: 120, stock: 4,  reorder: 12, emoji: '🧻', unit: 'แพ็ก' },
   { id: 'P006', name: 'นมสดโฟร์โมสต์ 1L',    sku: 'DRK-008', category: 'เครื่องดื่ม', price: 55, cost: 38,  stock: 88, reorder: 20, emoji: '🥛', unit: 'แพ็ก' },
 ];
 
