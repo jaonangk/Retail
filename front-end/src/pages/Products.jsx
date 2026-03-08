@@ -20,7 +20,7 @@ export default function Products() {
     setLoading(false);
   }, []);
 
-  const categories = ["ทุกหมวดหมู่", "เครื่องดื่ม", "อาหาร", "ของใช้"];
+  const categories = ['ทุกหมวดหมู่', 'เครื่องดื่ม', 'ขนมกินเล่น', 'ของใช้', 'อาหารสด', 'ยาและเวชภัณฑ์'];
 
   const filtered = products.filter((p) => {
     const matchSearch = p.name.includes(search) || p.id.includes(search);

@@ -47,7 +47,7 @@ function Layout({ cart, setCart }) {
           userName={user.name || 'Angkhanawan'}
           userRole={user.role || 'Admin'}
           cartQty={cartQty}
-          onCartClick={() => navigate('/pos')} // ✅ navigate พร้อมใช้แล้ว
+          onCartClick={() => navigate('/confirm-payment')} // ✅ เพิ่ม: ไปที่หน้าชำระเงินเมื่อคลิกตะกร้า
         />
         <main className="flex-1 overflow-y-auto bg-gray-100 h-screen">
           <Routes>
